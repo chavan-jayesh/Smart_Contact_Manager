@@ -3,8 +3,6 @@ package com.scm.services.impl;
 import java.util.List;
 import java.util.UUID;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -23,8 +21,6 @@ public class UserServiceImpl implements UserService{
 
     @Autowired
     private PasswordEncoder passwordEncoder;
-
-    private Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Override
     public User saveUser(User user) {
@@ -61,7 +57,7 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public void deleteUser(String id) {
-        User currentUser = userRepo.findById(id).orElseThrow(()-> new ResourceNotFoundException("User no Found!"));
+        User currentUser = userRepo.findById(id).orElseThrow(()-> new ResourceNotFoundException("User not Found!"));
         userRepo.delete(currentUser);
     }
 
@@ -81,6 +77,12 @@ public class UserServiceImpl implements UserService{
     @Override
     public List<User> getAllUsers() {
         return userRepo.findAll();
+    }
+
+    @Override
+    public User getUserByEmail(String email) {
+        return userRepo.findByEmail(email).orElse(null);
+
     }
 
 }
