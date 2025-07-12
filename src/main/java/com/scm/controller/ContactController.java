@@ -1,5 +1,6 @@
 package com.scm.controller;
 
+import java.util.List;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -89,4 +90,22 @@ public class ContactController {
 
         return "redirect:/user/contacts/add";
     }
+
+
+    @GetMapping
+    public String viewContact(Model model, Authentication authentication){
+
+        String username = Helper.getEmailOfLoggedInUser(authentication);
+
+        User user = userService.getUserByEmail(username);
+
+        List<Contact> contacts = contactService.getContactsByUserId(user.getUserId());
+
+        model.addAttribute("contacts", contacts);
+
+        return "user/contacts";
+    }
+
+
+
 }
