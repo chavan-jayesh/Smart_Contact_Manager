@@ -69,13 +69,6 @@ public class PageController {
             return "register";
         }
 
-        // User user = User.builder()
-        //                 .name(userForm.getName()).email(userForm.getEmail())
-        //                 .password(userForm.getPassword()).phoneNumber(userForm.getPhoneNumber())
-        //                 .about(userForm.getAbout())
-        //                 .profilePic("https://cdn-icons-png.flaticon.com/128/3237/3237472.png")
-        //                 .build();
-
         User user = new User();
 
         user.setName(userForm.getName());

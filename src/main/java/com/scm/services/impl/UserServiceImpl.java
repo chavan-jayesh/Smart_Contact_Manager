@@ -34,12 +34,12 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public User getUserbyId(String id) {
-        return userRepo.findById(id).orElseThrow(()-> new ResourceNotFoundException("User no Found!"));
+        return userRepo.findById(id).orElseThrow(()-> new ResourceNotFoundException("User not Found!"));
     }
 
     @Override
     public User updateUser(User user) {
-       User currentUser = userRepo.findById(user.getUserId()).orElseThrow(()-> new ResourceNotFoundException("User no Found!"));
+       User currentUser = userRepo.findById(user.getUserId()).orElseThrow(()-> new ResourceNotFoundException("User not Found!"));
        currentUser.setName(user.getName());
        currentUser.setEmail(user.getEmail());
        currentUser.setPassword(user.getPassword());
