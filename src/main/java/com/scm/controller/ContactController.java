@@ -1,5 +1,7 @@
 package com.scm.controller;
 
+import java.util.UUID;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
@@ -59,7 +61,9 @@ public class ContactController {
 
         User currentUser = userService.getUserByEmail(username);
 
-        String fileURL = imageService.uploadImage(contactForm.getContactImage());
+        String filename = UUID.randomUUID().toString();
+
+        String fileURL = imageService.uploadImage(contactForm.getContactImage(), filename);
 
         Contact contact = new Contact();
 
@@ -67,7 +71,8 @@ public class ContactController {
         contact.setEmail(contactForm.getEmail());
         contact.setPhoneNumber(contactForm.getPhoneNumber());
         contact.setAddress(contactForm.getAddress());
-        // contact.setPicture(contactForm.getPicture());
+        contact.setPicture(fileURL);
+        contact.setCloudinaryImagePublicId(fileURL);
         contact.setDescription(contactForm.getDescription());
         contact.setFavorite(contactForm.isFavorite());
         contact.setWebsiteLink(contactForm.getWebsiteLink());
