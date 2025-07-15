@@ -6,11 +6,11 @@ import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.scm.entities.Contact;
+import com.scm.entities.User;
 import com.scm.helper.ResourceNotFoundException;
 import com.scm.repositories.ContactRepo;
 import com.scm.services.ContactService;
@@ -75,5 +75,34 @@ public class ContactServiceImpl implements ContactService{
         Contact currentContact = contactRepo.findById(id).orElseThrow(()-> new ResourceNotFoundException("Contact not Found!"));
         contactRepo.delete(currentContact);
     }
+
+    @Override
+    public Page<Contact> searchContactByName(String nameKeyword, int page, int size, String sortBy, String direction, User user) {
+        Sort sort = direction.equals("desc") ? Sort.by(sortBy).descending() : Sort.by(sortBy).ascending();
+
+        PageRequest pageRequest = PageRequest.of(page, size);
+        
+        return contactRepo.findByUserAndNameContaining(user, nameKeyword, pageRequest);
+    }
+
+    @Override
+    public Page<Contact> searchContactByEmail(String emailKeyword, int page, int size, String sortBy, String direction, User user) {
+        Sort sort = direction.equals("desc") ? Sort.by(sortBy).descending() : Sort.by(sortBy).ascending();
+
+        PageRequest pageRequest = PageRequest.of(page, size);
+        
+        return contactRepo.findByUserAndEmailContaining(user, emailKeyword, pageRequest);
+    }
+
+    @Override
+    public Page<Contact> searchContactByPhone(String phoneKeyword, int page, int size, String sortBy, String direction, User user) {
+        Sort sort = direction.equals("desc") ? Sort.by(sortBy).descending() : Sort.by(sortBy).ascending();
+
+        PageRequest pageRequest = PageRequest.of(page, size);
+        
+        return contactRepo.findByUserAndPhoneNumberContaining(user, phoneKeyword, pageRequest);
+    }
+
+
 
 }

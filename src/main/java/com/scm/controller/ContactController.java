@@ -1,6 +1,5 @@
 package com.scm.controller;
 
-import java.util.List;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.scm.entities.Contact;
 import com.scm.entities.User;
 import com.scm.forms.ContactForm;
+import com.scm.forms.ContactSearchForm;
 import com.scm.helper.AppConstants;
 import com.scm.helper.Helper;
 import com.scm.helper.Message;
@@ -113,6 +114,39 @@ public class ContactController {
         return "user/contacts";
     }
 
+
+    //Search Handler
+
+    @GetMapping("/search")
+    public String searchHandler(@ModelAttribute ContactSearchForm contactSearchForm,
+                                @RequestParam(value = "page", defaultValue = "0") int page, 
+                                @RequestParam(value = "size", defaultValue = AppConstants.PAGE_SIZE+"") int size,
+                                @RequestParam(value = "sortBy", defaultValue = "name") String sortBy, 
+                                @RequestParam(value = "direction", defaultValue = "asc") String direction,
+                                Model model, Authentication authentication){
+        
+                                System.out.println("Field - "+ contactSearchForm.getField() + ", Value - "+ contactSearchForm.getValue());
+
+        Page<Contact> pageContacts = null;
+
+        String username = Helper.getEmailOfLoggedInUser(authentication);
+
+        User user = userService.getUserByEmail(username);
+        
+        if(contactSearchForm.getField().equalsIgnoreCase("Name")){
+            pageContacts = contactService.searchContactByName(contactSearchForm.getValue(), page, size, sortBy, direction, user);
+        }
+        else if(contactSearchForm.getField().equalsIgnoreCase("Email")){
+            pageContacts = contactService.searchContactByEmail(contactSearchForm.getValue(), page, size, sortBy, direction, user);
+        }
+        else if(contactSearchForm.getField().equalsIgnoreCase("Phone")){
+            pageContacts = contactService.searchContactByPhone(contactSearchForm.getValue(), page, size, sortBy, direction, user);
+        }
+
+        model.addAttribute("pageContacts", pageContacts);
+
+        return "user/search";
+    }
 
 
 }
