@@ -2,6 +2,8 @@ package com.scm.services;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+
 import com.scm.entities.Contact;
 
 public interface ContactService {
@@ -14,7 +16,7 @@ public interface ContactService {
 
     Contact getContactById(String id);
     
-    List<Contact> getContactsByUserId(String userId);
+    Page<Contact> getContactsByUserId(String userId, int page, int size, String sortBy, String direction);
 
     void delete(String id);
 

@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,10 +12,12 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.scm.entities.Contact;
 import com.scm.entities.User;
 import com.scm.forms.ContactForm;
+import com.scm.helper.AppConstants;
 import com.scm.helper.Helper;
 import com.scm.helper.Message;
 import com.scm.helper.MessageType;
@@ -93,15 +96,19 @@ public class ContactController {
 
 
     @GetMapping
-    public String viewContact(Model model, Authentication authentication){
+    public String viewContact(@RequestParam(value = "page", defaultValue = "0") int page, 
+                              @RequestParam(value = "size", defaultValue = AppConstants.PAGE_SIZE+"") int size,
+                              @RequestParam(value = "sortBy", defaultValue = "name") String sortBy, 
+                              @RequestParam(value = "direction", defaultValue = "asc") String direction,
+                              Model model, Authentication authentication){
 
         String username = Helper.getEmailOfLoggedInUser(authentication);
 
         User user = userService.getUserByEmail(username);
 
-        List<Contact> contacts = contactService.getContactsByUserId(user.getUserId());
+        Page<Contact> pageContacts = contactService.getContactsByUserId(user.getUserId(), page, size, sortBy, direction);
 
-        model.addAttribute("contacts", contacts);
+        model.addAttribute("pageContacts", pageContacts);
 
         return "user/contacts";
     }
