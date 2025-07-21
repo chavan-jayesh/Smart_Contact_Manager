@@ -11,6 +11,8 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.ElementCollection;
@@ -51,7 +53,7 @@ public class User implements UserDetails{
     private String profilePic;
     private String phoneNumber;
 
-    private boolean enabled = true;
+    private boolean enabled = false;
     private boolean emailVerified = false;
     private boolean phoneVerified = false;
 
@@ -60,11 +62,14 @@ public class User implements UserDetails{
     private String providerUserId;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
+    @JsonIgnore
     private List<Contact> contacts = new ArrayList<>();
 
     @ElementCollection(fetch = FetchType.EAGER)
     private List<String> roleList = new ArrayList<>();
     private List<SimpleGrantedAuthority> collect;
+
+    private String emailToken;
 
 
     @Override
@@ -94,10 +99,10 @@ public class User implements UserDetails{
 		return true;
 	}
 
-    // @Override   
-    // public boolean isEnabled() {
-	// 	return this.isEnabled();
-	// }
+    @Override   
+    public boolean isEnabled() {
+		return this.enabled;
+	}
 
     
 }

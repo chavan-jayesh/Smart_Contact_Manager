@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en" th:replace="~{base :: parent(~{::#errorpagecontent}, ~{::title}, ~{::script})}">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Error</title>
+    </head>
+    <body>
+        <div id="errorpagecontent" class="text-center 2xl mt-5 mx-auto md:w-1/2">
+            <div th:replace="~{message::messagebox}"></div>
+        </div>
+
+    <script>
+        console.log("Error page!");
+    </script>
+</body>
+</html>

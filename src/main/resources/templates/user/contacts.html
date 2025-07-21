@@ -14,11 +14,12 @@
         </div>
 
         <div class="sm:pl-64 pt-20">
-            <div class="">
+            <div>
                 <h1 class="text-5xl text-center">All Your Contacts</h1>
                 <p class="text-center">List of Contacts...</p>
                 <div class="contacts_container p-5">
                     <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+                        <div th:replace="~{message::messagebox}"></div>
                         <form th:unless="${pageContacts.isEmpty}" th:object="${contactSearchForm}" th:action="@{'/user/contacts/search'}">
                             <div class="flex space-x-3 p-5 items-center justify-start flex-column flex-wrap md:flex-row space-y-4 md:space-y-0 pb-4 bg-white dark:bg-gray-900">
                                 <div>
@@ -83,15 +84,17 @@
                                         </div>
                                     </td>
                                     <td class="px-6 py-4">
-                                        <a href="">
+                                        <button th:onclick="loadContactData([[${c.id}]])" class="mr-2">
                                             <i class="fa-solid fa-eye w-6"></i>
-                                        </a>
-                                        <a href="">
+                                        </button>
+
+                                        <a th:href="@{'/user/contacts/view/'+${c.id}}">
                                             <i class="fa-solid fa-pen-to-square w-6"></i>
                                         </a>
-                                        <a href="">
+
+                                        <button th:onclick="deleteContact([[${c.id}]])">
                                             <i class="fa-solid fa-user-xmark w-6"></i>
-                                        </a>
+                                        </button>
                                     </td>
                                 </tr>
                             </tbody>
@@ -104,6 +107,11 @@
                                 <ul class="inline-flex -space-x-px text-base h-10">
                                     <li th:unless="${pageContacts.isFirst()}">
                                         <a th:href="@{'/user/contacts?page='+${pageContacts.Number-1}}" class="flex items-center justify-center px-4 h-10 ms-0 leading-tight text-gray-500 bg-white border border-e-0 border-gray-300 rounded-s-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
+                                            Previous
+                                        </a>
+                                    </li>
+                                    <li th:if="${pageContacts.isFirst()}">
+                                        <a th:href="@{'/user/contacts?page='+${pageContacts.Number}}" class="flex items-center justify-center px-4 h-10 ms-0 leading-tight text-gray-500 bg-white border border-e-0 border-gray-300 rounded-s-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
                                             Previous
                                         </a>
                                     </li>
@@ -122,6 +130,11 @@
                                             Next
                                         </a>
                                     </li>
+                                    <li th:if="${pageContacts.isLast()}">
+                                        <a th:href="@{'/user/contacts?page='+${pageContacts.Number}}" class="flex items-center justify-center px-4 h-10 leading-tight text-gray-500 bg-white border border-gray-300 rounded-e-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
+                                            Next
+                                        </a>
+                                    </li>
                                 </ul>
                             </nav>
                         </div>
@@ -131,14 +144,16 @@
                     </div>
                 </div>
             </div>
+
+            <div th:replace="~{user/contacts_modal::viewcontact}"></div>
+
         </div>
+
     </div>
 
+    <script th:src="@{'/js/contact.js'}"></script>
     <script>
         console.log("Contacts page!");
     </script>
-</body>
-</html>
-    
 </body>
 </html>
