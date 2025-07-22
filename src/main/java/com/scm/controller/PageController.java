@@ -1,7 +1,5 @@
 package com.scm.controller;
 
-import java.util.UUID;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,10 +10,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import com.scm.entities.User;
 import com.scm.forms.UserForm;
-import com.scm.helper.Helper;
 import com.scm.helper.Message;
 import com.scm.helper.MessageType;
-import com.scm.services.EmailService;
 import com.scm.services.UserService;
 
 import jakarta.servlet.http.HttpSession;

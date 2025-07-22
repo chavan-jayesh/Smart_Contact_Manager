@@ -29,7 +29,7 @@ public class AuthController {
             if(user.getEmailToken().equals(token)){
                 user.setEmailVerified(true);
                 user.setEnabled(true);
-                userService.saveUser(user);
+                userService.updateUser(user);
                 Message message = Message.builder()
                                  .content("Email is Verified! Now Your Account is Enabled!")
                                  .messageType(MessageType.green).build();

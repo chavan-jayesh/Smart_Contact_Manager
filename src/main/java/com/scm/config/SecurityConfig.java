@@ -103,7 +103,7 @@ public class SecurityConfig {
 
                         HttpSession session = request.getSession();
                         session.setAttribute("message", Message.builder()
-                                                                    .content("User is Disabled!")
+                                                                    .content("User is Disabled! Verification link sent on registered email Id!")
                                                                     .messageType(MessageType.red).build());
 
                         response.sendRedirect("/login");
