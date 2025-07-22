@@ -215,7 +215,7 @@ public class ContactController {
             contactForm.setPicture(fileURL);
         }
 
-        Contact updatedContact = contactService.update(contact);
+        contactService.update(contact);
 
         Message message = Message.builder()
                                  .content("Contact Updated successfully!")

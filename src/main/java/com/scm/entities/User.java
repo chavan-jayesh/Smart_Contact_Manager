@@ -2,9 +2,7 @@ package com.scm.entities;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 import org.springframework.security.core.GrantedAuthority;
@@ -53,19 +51,27 @@ public class User implements UserDetails{
     private String profilePic;
     private String phoneNumber;
 
+    @Builder.Default
     private boolean enabled = false;
+
+    @Builder.Default
     private boolean emailVerified = false;
+
+    @Builder.Default
     private boolean phoneVerified = false;
 
     @Enumerated(value = EnumType.STRING)
+    @Builder.Default
     private Providers provider = Providers.SELF;
     private String providerUserId;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
     @JsonIgnore
+    @Builder.Default
     private List<Contact> contacts = new ArrayList<>();
 
     @ElementCollection(fetch = FetchType.EAGER)
+    @Builder.Default
     private List<String> roleList = new ArrayList<>();
     private List<SimpleGrantedAuthority> collect;
 

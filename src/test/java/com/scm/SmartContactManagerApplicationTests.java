@@ -8,7 +8,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import com.scm.services.EmailService;
 
-import io.mailtrap.client.MailtrapClient;
 import io.mailtrap.config.MailtrapConfig;
 import io.mailtrap.factory.MailtrapClientFactory;
 import io.mailtrap.model.request.emails.Address;

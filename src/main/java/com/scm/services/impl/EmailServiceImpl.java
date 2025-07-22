@@ -28,13 +28,11 @@ public class EmailServiceImpl implements EmailService{
 
     @Override
     public void sendEmailWithHtml() {
-        // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'sendEmailWithHtml'");
     }
 
     @Override
     public void sendEmailWithAttachment() {
-        // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'sendEmailWithAttachment'");
     }
 

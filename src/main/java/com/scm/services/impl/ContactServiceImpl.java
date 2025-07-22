@@ -65,7 +65,7 @@ public class ContactServiceImpl implements ContactService{
 
         Sort sort = direction.equals("desc") ? Sort.by(sortBy).descending() : Sort.by(sortBy).ascending();
 
-        PageRequest pageRequest = PageRequest.of(page, size);
+        PageRequest pageRequest = PageRequest.of(page, size, sort);
         
         return contactRepo.findByUserId(userId, pageRequest);
     }
@@ -80,7 +80,7 @@ public class ContactServiceImpl implements ContactService{
     public Page<Contact> searchContactByName(String nameKeyword, int page, int size, String sortBy, String direction, User user) {
         Sort sort = direction.equals("desc") ? Sort.by(sortBy).descending() : Sort.by(sortBy).ascending();
 
-        PageRequest pageRequest = PageRequest.of(page, size);
+        PageRequest pageRequest = PageRequest.of(page, size, sort);
         
         return contactRepo.findByUserAndNameContaining(user, nameKeyword, pageRequest);
     }
@@ -89,7 +89,7 @@ public class ContactServiceImpl implements ContactService{
     public Page<Contact> searchContactByEmail(String emailKeyword, int page, int size, String sortBy, String direction, User user) {
         Sort sort = direction.equals("desc") ? Sort.by(sortBy).descending() : Sort.by(sortBy).ascending();
 
-        PageRequest pageRequest = PageRequest.of(page, size);
+        PageRequest pageRequest = PageRequest.of(page, size, sort);
         
         return contactRepo.findByUserAndEmailContaining(user, emailKeyword, pageRequest);
     }
@@ -98,7 +98,7 @@ public class ContactServiceImpl implements ContactService{
     public Page<Contact> searchContactByPhone(String phoneKeyword, int page, int size, String sortBy, String direction, User user) {
         Sort sort = direction.equals("desc") ? Sort.by(sortBy).descending() : Sort.by(sortBy).ascending();
 
-        PageRequest pageRequest = PageRequest.of(page, size);
+        PageRequest pageRequest = PageRequest.of(page, size, sort);
         
         return contactRepo.findByUserAndPhoneNumberContaining(user, phoneKeyword, pageRequest);
     }
