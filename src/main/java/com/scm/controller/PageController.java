@@ -43,9 +43,9 @@ public class PageController {
         return "services";
     }
 
-    @GetMapping("/contact")
-    public String contact(){
-        return "contact";
+    @GetMapping("/contactus")
+    public String contactus(){
+        return "contactus";
     }
 
     @GetMapping("/login")

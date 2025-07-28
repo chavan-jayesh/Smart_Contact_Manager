@@ -13,15 +13,131 @@
             <div th:replace="~{user/sidebar::sidebar}"></div>
         </div>
 
-        <div class="sm:pl-64" style="height: 1000px;">
-            <div class="flex justify-center flex-col">
-            <h1 class="text-5xl">This is user profile page</h1>
-            <h1 th:text="${loggedInUser.name}"></h1>
-            <h1 th:text="${loggedInUser.email}"></h1>
-            <a class="text-blue-600 underline" th:href="@{/do-logout}">Logout</a>
+        <div class="sm:pl-64">
+            <!-- Main Content Area -->
+            <div class="p-4 md:p-8">
+                <!-- Header -->
+                <div class="flex justify-between items-center mb-8">
+                    <h1 class="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white">My Profile</h1>
+                    <a type="button" th:href="@{'/user/update-profile/'+${loggedInUser.userId}}" class="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg">
+                        Edit Profile
+                    </a>
+                </div>
+
+                <!-- Profile Card -->
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                    <!-- Left Column - Profile Info -->
+                    <div class="lg:col-span-1">
+                        <div class="bg-white dark:bg-gray-800 rounded-xl shadow-md overflow-hidden hover:shadow-lg">
+                            <div class="p-6">
+                                <!-- Profile Picture -->
+                                <div class="flex justify-center mb-4">
+                                    <div class="relative">
+                                        <img th:src="${loggedInUser.profilePic}" alt="Profile Picture" 
+                                             class="w-32 h-32 rounded-full object-cover">
+                                    </div>
+                                </div>
+                                
+                                <!-- User Info -->
+                                <div class="text-center">
+                                    <h2 class="text-xl font-semibold text-gray-900 dark:text-white" th:text="${loggedInUser.name}"></h2>
+                                    <p class="text-gray-600 dark:text-gray-400" th:text="${loggedInUser.email}"></p>
+                                    
+                                    <div class="mt-4 flex justify-center space-x-2">
+                                        <span th:if="${loggedInUser.emailVerified}" class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200">
+                                            Email Verified
+                                        </span>
+                                        <span th:unless="${loggedInUser.emailVerified}" class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200">
+                                            Email Not Verified
+                                        </span>
+                                        
+                                        <span th:if="${loggedInUser.phoneVerified}" class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200">
+                                            Phone Verified
+                                        </span>
+                                    </div>
+                                </div>
+                                
+                                <!-- Stats -->
+                                <div class="mt-6">
+                                    <div class="bg-gray-50 dark:bg-gray-700 p-3 rounded-lg text-center">
+                                        <p class="text-sm text-gray-500 dark:text-gray-400">Total Contacts</p>
+                                        <p th:text="${contacts.size()}" class="text-lg font-semibold text-gray-900 dark:text-white"></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Right Column - Details -->
+                    <div class="lg:col-span-2">
+                        <div class="bg-white dark:bg-gray-800 rounded-xl shadow-md overflow-hidden">
+                            <div class="p-6">
+                                <h3 class="text-lg font-medium text-gray-900 dark:text-white mb-6">Personal Information</h3>
+                                
+                                <!-- Details Grid -->
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                    <!-- Name -->
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-500 dark:text-gray-400">Full Name</label>
+                                        <p class="mt-1 text-sm text-gray-900 dark:text-white" th:text="${loggedInUser.name}"></p>
+                                    </div>
+                                    
+                                    <!-- Email -->
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-500 dark:text-gray-400">Email Address</label>
+                                        <p class="mt-1 text-sm text-gray-900 dark:text-white" th:text="${loggedInUser.email}"></p>
+                                    </div>
+                                    
+                                    <!-- Phone -->
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-500 dark:text-gray-400">Phone Number</label>
+                                        <p class="mt-1 text-sm text-gray-900 dark:text-white" th:text="${loggedInUser.phoneNumber ?: 'Not provided'}"></p>
+                                    </div>
+                                    
+                                    <!-- User ID -->
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-500 dark:text-gray-400">User ID</label>
+                                        <p class="mt-1 text-sm text-gray-900 dark:text-white" th:text="${loggedInUser.userId}"></p>
+                                    </div>
+                                    
+                                    <!-- About -->
+                                    <div class="md:col-span-2">
+                                        <label class="block text-sm font-medium text-gray-500 dark:text-gray-400">About</label>
+                                        <p class="mt-1 text-sm text-gray-900 dark:text-white" th:text="${loggedInUser.about ?: 'No information provided'}"></p>
+                                    </div>
+                                </div>
+                                
+                                <!-- Account Status -->
+                                <div class="mt-8 pt-6 border-t border-gray-200 dark:border-gray-700">
+                                    <h3 class="text-lg font-medium text-gray-900 dark:text-white mb-4">Account Status</h3>
+                                    <div class="space-y-3">
+                                        <div class="flex items-center">
+                                            <span th:classappend="${loggedInUser.enabled} ? 'bg-green-400 text-green-400' : 'bg-red-400'" class="flex-shrink-0 h-2.5 w-2.5 rounded-full"></span>
+                                            <span class="ml-2 text-sm font-medium text-gray-900 dark:text-white">
+                                                Account is <span th:text="${loggedInUser.enabled} ? 'active' : 'inactive'"></span>
+                                            </span>
+                                        </div>
+                                        <div class="flex items-center">
+                                            <span th:classappend="${loggedInUser.emailVerified} ? 'bg-green-400' : 'bg-yellow-400'" class="flex-shrink-0 h-2.5 w-2.5 rounded-full"></span>
+                                            <span class="ml-2 text-sm font-medium text-gray-900 dark:text-white">
+                                                Email is <span th:text="${loggedInUser.emailVerified} ? 'verified' : 'not verified'"></span>
+                                            </span>
+                                        </div>
+                                        <div class="flex items-center">
+                                            <span th:classappend="${loggedInUser.phoneVerified} ? 'bg-green-400' : 'bg-red-400'" class="flex-shrink-0 h-2.5 w-2.5 rounded-full"></span>
+                                            <span class="ml-2 text-sm font-medium text-gray-900 dark:text-white">
+                                                Phone is <span th:text="${loggedInUser.phoneVerified} ? 'verified' : 'not provided/verified'"></span>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
         </div>
-        </div>
-        
         
     </div>
 

@@ -1,7 +1,7 @@
 <div th:fragment="messagebox" th:if="${session.message}" th:object="${session.message}"
      th:classappend="*{'text-'+messageType+'-800 border border-'+messageType+'-300 rounded-lg bg-'+messageType+'-50 
                      dark:bg-'+messageType+'-800 dark:text-'+messageType+'-200 dark:border-'+messageType+'-800'}"
-     class="flex items-center p-4 mb-4 text-sm" 
+     class="flex items-center p-5 mb-4 text-sm" 
      role="alert">
 
   <svg class="shrink-0 inline w-4 h-4 me-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">

@@ -1,5 +1,7 @@
 package com.scm.forms;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
@@ -34,4 +36,7 @@ public class UserForm {
 
     @NotBlank(message = "About cannot be Empty!")
     private String about;
+
+    private MultipartFile profileImage;
+    private String profilePic;
 }

@@ -103,6 +103,29 @@ public class ContactServiceImpl implements ContactService{
         return contactRepo.findByUserAndPhoneNumberContaining(user, phoneKeyword, pageRequest);
     }
 
+    @Override
+    public List<Contact> getContactByUsername(String username) {
+        List<Contact> contacts = contactRepo.findByUserEmail(username);
+        return contacts;
+    }
+
+    @Override
+    public List<Contact> getRecentContacts(String username) {
+        return contactRepo.findRecentContactsByEmail(username);
+    }
+
+    @Override
+    public Page<Contact> getFavoriteContactsByUserId(String userId, int page, int size, String sortBy, String direction) {
+        
+        Sort sort = direction.equals("desc") ? Sort.by(sortBy).descending() : Sort.by(sortBy).ascending();
+
+        PageRequest pageRequest = PageRequest.of(page, size, sort);
+        
+        return contactRepo.findByUserIdandIsFavorite(userId, pageRequest);
+    }
+
+    
+
 
 
 }

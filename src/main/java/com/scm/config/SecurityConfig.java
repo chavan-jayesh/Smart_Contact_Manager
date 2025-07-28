@@ -60,14 +60,11 @@ public class SecurityConfig {
         });
 
 
-        // //form default login
-        // httpSecurity.formLogin(Customizer.withDefaults());
-
         httpSecurity.formLogin(formLogin -> {
 
             formLogin.loginPage("/login");
             formLogin.loginProcessingUrl("/authenticate");
-            formLogin.defaultSuccessUrl("/user/profile");
+            formLogin.defaultSuccessUrl("/user/dashboard");
             formLogin.usernameParameter("email");
             formLogin.passwordParameter("password");
 

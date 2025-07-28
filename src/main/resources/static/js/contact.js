@@ -50,6 +50,22 @@ async function loadContactData(id){
 
         document.getElementById("contact_name").innerHTML = data.name;
         document.getElementById("contact_email").innerHTML = data.email;
+        document.getElementById("contact_phone").innerHTML = data.phoneNumber;
+        document.getElementById("contact_address").innerHTML = data.address;
+        document.getElementById("contact_image").src = data.picture;
+        document.getElementById("contact_about").innerHTML = data.description;
+        document.getElementById("contact_website").innerHTML = data.websiteLink;
+        document.getElementById("contact_linkedIn").innerHTML = data.linkedinLink;
+        document.getElementById("contact_website").href = data.websiteLink;
+        document.getElementById("contact_linkedIn").href = data.linkedinLink;
+        document.getElementById("edit_contact").href = `/user/contacts/view/${data.id}`;
+
+        const contactFavorite = document.getElementById("contact_favorite");
+        if (data.favorite) {
+            contactFavorite.innerHTML = "<i class='fas fa-star text-yellow-400'></i><i class='fas fa-star text-yellow-400'></i><i class='fas fa-star text-yellow-400'></i><i class='fas fa-star text-yellow-400'></i><i class='fas fa-star text-yellow-400'></i>";
+        } else {
+            contactFavorite.innerHTML = "Not Favorite Contact";
+        }
         openContactModal();
     }
     catch(error){
@@ -77,7 +93,3 @@ async function deleteContact(id) {
     }
   });
 }
-
-
-
-

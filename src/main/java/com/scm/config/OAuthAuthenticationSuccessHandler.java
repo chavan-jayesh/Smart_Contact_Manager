@@ -114,7 +114,7 @@ public class OAuthAuthenticationSuccessHandler implements AuthenticationSuccessH
             logger.info("User Saved: "+ user.getEmail());
         }
 
-        new DefaultRedirectStrategy().sendRedirect(request, response, "/user/profile");
+        new DefaultRedirectStrategy().sendRedirect(request, response, "/user/dashboard");
         
     }
 

@@ -18,8 +18,13 @@ public interface ContactService {
     Contact getContactById(String id);
     
     Page<Contact> getContactsByUserId(String userId, int page, int size, String sortBy, String direction);
+    Page<Contact> getFavoriteContactsByUserId(String userId, int page, int size, String sortBy, String direction);
 
     void delete(String id);
+
+    List<Contact> getContactByUsername(String username);
+
+    List<Contact> getRecentContacts(String username);
 
     //Search Contact
     Page<Contact> searchContactByName(String nameKeyword, int page, int size, String sortBy, String direction, User user);

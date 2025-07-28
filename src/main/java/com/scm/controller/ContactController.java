@@ -1,7 +1,6 @@
 package com.scm.controller;
 
 import java.util.UUID;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.security.core.Authentication;
@@ -46,7 +45,6 @@ public class ContactController {
     @GetMapping("/add")
     public String addContact(Model model){
         ContactForm contactForm = new ContactForm();
-        // ContactForm contactForm = new ContactForm("Jayesh Chavan","jayesh123@gmail.com", "123456789", "This is my contact", "Mharal, Kalyan-421301", true, "www.google.com", "www.linkedin/in/jayesh");
         
         model.addAttribute("contactForm", contactForm);
         return "user/add_contact";
@@ -83,8 +81,21 @@ public class ContactController {
 
         contact.setDescription(contactForm.getDescription());
         contact.setFavorite(contactForm.isFavorite());
-        contact.setWebsiteLink(contactForm.getWebsiteLink());
-        contact.setLinkedinLink(contactForm.getLinkedinLink());
+
+        if (!contactForm.getWebsiteLink().startsWith("http")) {
+            contact.setWebsiteLink("https://" + contactForm.getWebsiteLink());
+        }
+        else{
+            contact.setWebsiteLink(contactForm.getWebsiteLink());
+        }
+
+        if (!contactForm.getLinkedinLink().startsWith("http")) {
+            contact.setLinkedinLink("https://" + contactForm.getLinkedinLink());
+        }
+        else{
+            contact.setLinkedinLink(contactForm.getLinkedinLink());
+        }
+        
         contact.setUser(currentUser);
 
         contactService.save(contact);
@@ -203,8 +214,20 @@ public class ContactController {
         contact.setAddress(contactForm.getAddress());
         contact.setDescription(contactForm.getDescription());
         contact.setFavorite(contactForm.isFavorite());
-        contact.setWebsiteLink(contactForm.getWebsiteLink());
-        contact.setLinkedinLink(contactForm.getLinkedinLink());
+
+        if (!contactForm.getWebsiteLink().startsWith("http")) {
+            contact.setWebsiteLink("https://" + contactForm.getWebsiteLink());
+        }
+        else{
+            contact.setWebsiteLink(contactForm.getWebsiteLink());
+        }
+
+        if (!contactForm.getLinkedinLink().startsWith("http")) {
+            contact.setLinkedinLink("https://" + contactForm.getLinkedinLink());
+        }
+        else{
+            contact.setLinkedinLink(contactForm.getLinkedinLink());
+        }
         
         if(contactForm.getContactImage() != null && !contactForm.getContactImage().isEmpty()){
             //Process image
@@ -224,6 +247,24 @@ public class ContactController {
         session.setAttribute("message", message);
         
         return "redirect:/user/contacts/view/" + contactId;
+    }
+
+    @GetMapping("/favorites")
+    public String viewFavoriteContacts(@RequestParam(value = "page", defaultValue = "0") int page, 
+                              @RequestParam(value = "size", defaultValue = AppConstants.PAGE_SIZE+"") int size,
+                              @RequestParam(value = "sortBy", defaultValue = "name") String sortBy, 
+                              @RequestParam(value = "direction", defaultValue = "asc") String direction,
+                              Model model, Authentication authentication){
+
+        String username = Helper.getEmailOfLoggedInUser(authentication);
+
+        User user = userService.getUserByEmail(username);
+
+        Page<Contact> pageFavoriteContacts = contactService.getFavoriteContactsByUserId(user.getUserId(), page, size, sortBy, direction);
+
+        model.addAttribute("pageFavoriteContacts", pageFavoriteContacts);
+
+        return "user/favorite_contacts";
     }
 
 }

@@ -1,5 +1,9 @@
 package com.scm.entities;
 
+import java.time.LocalDateTime;
+
+import org.hibernate.annotations.CreationTimestamp;
+
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import jakarta.persistence.Column;
@@ -34,10 +38,11 @@ public class Contact {
 
     private String cloudinaryImagePublicId;
 
+    @CreationTimestamp
+    private LocalDateTime createdAt;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     private User user;
 
-    // @OneToMany(mappedBy = "contact", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
-    // private List<SocialLink> socialLinks = new ArrayList<>();
 }

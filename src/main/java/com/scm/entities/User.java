@@ -49,6 +49,8 @@ public class User implements UserDetails{
     private String about;
     @Column(columnDefinition = "TEXT")
     private String profilePic;
+
+    private String CloudinaryImagePublicId;
     private String phoneNumber;
 
     @Builder.Default
