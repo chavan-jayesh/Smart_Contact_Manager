@@ -18,37 +18,7 @@
                 <div class="contacts_container py-8 px-4 bg-white dark:bg-gray-900">
                     <div th:replace="~{message::messagebox}"></div>
                     <h1 class="text-5xl text-center font-bold">Favorite Contacts</h1>
-                    <div class="flex md:flex-row flex-col justify-between items-center pt-8">
-                        <form th:unless="${pageFavoriteContacts.isEmpty}" th:object="${contactSearchForm}" th:action="@{'/user/contacts/search'}">
-                            <div class="flex space-x-3 p-5 items-center justify-start flex-column flex-wrap md:flex-row space-y-4 md:space-y-0 pb-4">
-                                <div>
-                                    <select required name="field" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                                        <option selected value="">Select field</option>
-                                        <option value="name">Name</option>
-                                        <option value="phone">Phone</option>
-                                        <option value="email">Email</option>
-                                    </select>
-                                </div>
-
-                                <div class="search_input_container">
-                                    <label for="table-search" class="sr-only">Search</label>
-                                    <div class="relative">
-                                        <div class="absolute inset-y-0 rtl:inset-r-0 start-0 flex items-center ps-3 pointer-events-none">
-                                            <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
-                                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
-                                            </svg>
-                                        </div>
-                                        <input name="value" id="table-search-users" class="block p-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg w-80 bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Search for contacts">
-                                    </div>
-                                </div>
-                                <button type="submit" class="px-3 py-2 bg-gray-800 text-white rounded">Search</button>
-                            </div>
-                        </form>
-                        <div th:unless="${pageFavoriteContacts.isEmpty}">
-                            <button type="button" onclick="exportData()" class="px-3 py-2 bg-green-600 text-white rounded">Export</button>
-                        </div>
-                    </div>
-                    <div class="relative overflow-x-auto">
+                    <div class="relative overflow-x-auto pt-8">
                         <table th:unless="${pageFavoriteContacts.isEmpty}" id="contact_table" class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
                             <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                                 <tr>
@@ -150,17 +120,6 @@
 
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/@linways/table-to-excel@1.0.4/dist/tableToExcel.min.js"></script>
     <script th:src="@{'/js/contact.js'}"></script>
-    <script>
-        function exportData(){
-            TableToExcel.convert(document.getElementById("contact_table"), {
-                name: "contacts.xlsx",
-                sheet: {
-                    name: "Sheet 1"
-                }
-            });
-        };
-    </script>
 </body>
 </html>

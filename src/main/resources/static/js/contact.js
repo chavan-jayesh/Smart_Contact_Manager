@@ -93,3 +93,13 @@ async function deleteContact(id) {
     }
   });
 }
+
+// Exporting Contact Data into excel sheet
+function exportData(){
+    TableToExcel.convert(document.getElementById("contact_table_info"), {
+        name: "contacts.xlsx",
+        sheet: {
+            name: "Sheet 1"
+        }
+    });
+};

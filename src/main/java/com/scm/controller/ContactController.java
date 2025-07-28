@@ -136,7 +136,7 @@ public class ContactController {
                                 @RequestParam(value = "direction", defaultValue = "asc") String direction,
                                 Model model, Authentication authentication){
         
-                                System.out.println("Field - "+ contactSearchForm.getField() + ", Value - "+ contactSearchForm.getValue());
+        System.out.println("Field - "+ contactSearchForm.getField() + ", Value - "+ contactSearchForm.getValue());
 
         Page<Contact> pageContacts = null;
 
