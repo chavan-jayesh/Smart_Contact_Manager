@@ -1,6 +1,5 @@
 package com.scm;
 
-import com.scm.config.AppConfig;
 import com.scm.entities.User;
 import com.scm.helper.AppConstants;
 import com.scm.repositories.UserRepo;

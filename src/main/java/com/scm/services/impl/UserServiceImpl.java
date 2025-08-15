@@ -27,6 +27,9 @@ public class UserServiceImpl implements UserService{
     @Autowired
     private EmailService emailService;
 
+    @Autowired
+    private Helper helper;
+
     @Override
     public User saveUser(User user) {
         String userId = UUID.randomUUID().toString();
@@ -40,7 +43,7 @@ public class UserServiceImpl implements UserService{
 
         User savedUser =  userRepo.save(user);
 
-        String emailLink = Helper.getLinkForEmailVerification(emailToken);
+        String emailLink = helper.getLinkForEmailVerification(emailToken);
 
         emailService.sendEmail(savedUser.getEmail(), "Verify Account : Smart Contact Manager", emailLink);
 

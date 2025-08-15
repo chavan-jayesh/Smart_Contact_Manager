@@ -1,7 +1,7 @@
 console.log("This is contact JS!");
 
 const viewContactModal = document.getElementById("view_contact_modal");
-const baseURL = "localhost:8080";
+const baseURL = "https://smartcontacts.online";
 
 // options with default values
 const options = {
@@ -88,7 +88,7 @@ async function deleteContact(id) {
   }).then((result) => {
     /* Read more about isConfirmed, isDenied below */
     if (result.isConfirmed) {
-      const url = `http://${baseURL}/user/contacts/delete/` + id;
+      const url = `${baseURL}/user/contacts/delete/` + id;
       window.location.replace(url);
     }
   });

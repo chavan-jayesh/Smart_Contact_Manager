@@ -79,7 +79,6 @@ public class User implements UserDetails{
 
     private String emailToken;
 
-
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         //converted list of roles into Collection of Simple Granted Authority
@@ -90,6 +89,11 @@ public class User implements UserDetails{
     @Override
     public String getUsername() {
         return this.email;
+    }
+
+    @Override
+    public String getPassword() {
+        return this.password;
     }
 
     @Override

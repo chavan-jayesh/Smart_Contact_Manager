@@ -10,20 +10,20 @@ import com.scm.services.EmailService;
 @Service
 public class EmailServiceImpl implements EmailService{
 
-    @Autowired
-    private JavaMailSender eMailSender;
+    private final JavaMailSender emailSender;
+
+    public EmailServiceImpl(JavaMailSender emailSender) {
+        this.emailSender = emailSender;
+    }
 
     @Override
     public void sendEmail(String to, String subject, String body) {
         SimpleMailMessage message = new SimpleMailMessage();
-
         message.setTo(to);
         message.setSubject(subject);
         message.setText(body);
-        message.setFrom("scm@demomailtrap.co");
-        eMailSender.send(message);
-
-
+        message.setFrom("no-reply@smartcontacts.online"); // Must be verified in Resend
+        emailSender.send(message);
     }
 
     @Override
